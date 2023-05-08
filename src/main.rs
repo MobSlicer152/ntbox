@@ -2,6 +2,12 @@ use chrono::Local;
 use fern::colors::{Color, ColoredLevelConfig};
 use log::{info};
 use std::{fs, io};
+use unicorn_engine::unicorn_const;
+
+mod loader;
+
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 pub struct DataDirs;
 impl DataDirs {
@@ -69,5 +75,9 @@ fn main() {
         panic!("Failed to set up logger")
     }
 
-    info!("ntbox initializing");
+    info!("Initializing ntbox");
+    
+    info!("Initializing emulation");
+    let mut emu = unicorn_engine::Unicorn::new(unicorn_const::Arch::X86, unicorn_const::Mode::MODE_64);
+    
 }
