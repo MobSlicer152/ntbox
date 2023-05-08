@@ -78,6 +78,9 @@ fn main() {
     info!("Initializing ntbox");
     
     info!("Initializing emulation");
-    let mut emu = unicorn_engine::Unicorn::new(unicorn_const::Arch::X86, unicorn_const::Mode::MODE_64);
+    let mut emu = match unicorn_engine::Unicorn::new(unicorn_const::Arch::X86, unicorn_const::Mode::MODE_64) {
+        Ok(emu) => emu,
+        Err(err) => panic!("Failed to create Unicorn instance: {err:?}")
+    };
     
 }
